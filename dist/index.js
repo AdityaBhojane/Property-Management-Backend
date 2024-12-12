@@ -16,8 +16,10 @@ const express_1 = __importDefault(require("express"));
 const http_status_codes_1 = require("http-status-codes");
 const severConfig_1 = require("./configs/severConfig");
 const dbConfig_1 = __importDefault(require("./configs/dbConfig"));
+const apiRouter_1 = __importDefault(require("./routes/apiRouter"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
+app.use('/api', apiRouter_1.default);
 app.get('/ping', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.status(http_status_codes_1.StatusCodes.OK).json({
         message: 'pong'
@@ -25,5 +27,5 @@ app.get('/ping', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 app.listen(severConfig_1.PORT, () => {
     (0, dbConfig_1.default)();
-    console.log("server is up");
+    console.log("server is up on port", severConfig_1.PORT);
 });

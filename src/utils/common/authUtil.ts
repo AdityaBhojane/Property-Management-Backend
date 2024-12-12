@@ -7,6 +7,6 @@ interface IPayload {
     email?:string
 }
 
-export const createJWT = async (payload:IPayload)=>{
+export const createJWT = (payload:IPayload)=>{
     return jwt.sign(payload, JWT_SECRET as string,{expiresIn:JWT_EXPIRY}) 
 }

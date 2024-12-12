@@ -14,7 +14,7 @@ const userRespository_1 = require("../repository/userRespository");
 const authUtil_1 = require("../utils/common/authUtil");
 const userSignUpService = (data) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = (yield userRespository_1.userRepository).create(data);
+        const response = yield (yield userRespository_1.userRepository).create(data);
         return response;
     }
     catch (error) {

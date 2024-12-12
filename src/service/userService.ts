@@ -9,7 +9,7 @@ interface Idata {
 
 export const  userSignUpService = async (data:Idata)=>{
     try {
-        const response = (await userRepository).create(data);
+        const response = await (await userRepository).create(data);
         return response
     } catch (error) {
         console.log(error);
