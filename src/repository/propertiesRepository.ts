@@ -3,5 +3,7 @@ import crudRepository from "./crudRepository";
 
 
 export const PropertyRepository = {
-    ...crudRepository(Property)
+    ...crudRepository(Property),
+    getAllProperties:async()=> await Property.find(),
+
 }
