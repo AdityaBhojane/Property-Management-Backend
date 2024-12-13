@@ -2,8 +2,8 @@
 packages :
 
 ```bash
-npm i @types/argon2
-npm i @types/express
-npm i @types/jsonwebtoken
+npm i argon2 @types/argon2
+npm i express @types/express
+npm i jsonwebtoken @types/jsonwebtoken
 npm i zod
 ```
