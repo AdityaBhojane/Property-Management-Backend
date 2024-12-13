@@ -3,7 +3,7 @@ import { ADMIN_APP_KEY, ADMIN_EMAIL } from './severConfig';
 
 export const mailer = nodemailer.createTransport({
     service:"Gmail",
-    host:"smpt.gmail.com",
+    host:"smtp.gmail.com",
     port:465,
     secure:true,
     auth:{

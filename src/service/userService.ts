@@ -1,3 +1,7 @@
+
+import { mailObjectValidation } from "../helpers/mailObject";
+import otpGenerator from "../helpers/otpGenerator";
+import { addEmailToQueue } from "../queues/mailQueue";
 import { userRepository } from "../repository/userRespository"
 import { createJWT } from '../utils/common/authUtil';
 
@@ -24,6 +28,7 @@ export const userSignInService = async (data:Idata)=>{
         if(!user) throw new Error('Invalid email and password');
         const isPasswordMatch = await user.verifyPassword(password);
         if(!isPasswordMatch) throw new Error('Password is not valid');
+        addEmailToQueue(mailObjectValidation(email,otpGenerator()))
         return {
             username:user.username,
             email,

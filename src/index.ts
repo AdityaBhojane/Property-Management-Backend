@@ -21,12 +21,12 @@ app.get('/ping',async(req,res)=>{
 app.listen(PORT, async ()=>{
     connectDB();
     console.log("server is up on port", PORT);
-    const response =  await mailer.sendMail({
-        from:'nestify.manager@gmail.com',
-        to:"adityabhojane2001@gmail.com",
-        subject:"sample email",
-        text:"sample text",
-        html:"<p> paragraph tag<p>"
-    });
-    console.log('email' , response)
+    // const response =  await mailer.sendMail({
+    //     from:'nestify.manager@gmail.com',
+    //     to:"adityabhojane2001@gmail.com",
+    //     subject:"sample email",
+    //     text:"sample text",
+    //     html:"<p> paragraph tag<p>"
+    // });
+    // console.log('email' , response)
 })
