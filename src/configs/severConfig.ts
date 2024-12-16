@@ -9,4 +9,5 @@ export const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
 export const ADMIN_APP_KEY = process.env.ADMIN_APP_KEY;
 export const REDIS_URL = process.env.REDIS_URL;
 export const REDIS_PORT =parseInt(process.env.REDIS_PORT || '0', 10) || undefined;
+export const OTP_EXPIRATION = parseInt(process.env.OTP_EXPIRATION || "0");
 // const REDIS_PORT = process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT, 10) : undefined; base 10 

@@ -17,9 +17,9 @@ const mailQueue = new Queue('mailQueue',{
 mailQueue.process(async(job)=>{
     try {
         const data = job.data;
-        console.log('email data', data);
+        console.log("email is ready...");
         const response = await mailer.sendMail(data);
-        console.log("success -" ,response)
+        console.log("added to queue", response)
     } catch (error) {
         console.log("error ", error)
     }

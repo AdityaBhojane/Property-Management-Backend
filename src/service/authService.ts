@@ -2,6 +2,9 @@
 import { mailObjectValidation } from "../helpers/mailObject";
 import otpGenerator from "../helpers/otpGenerator";
 import { addEmailToQueue } from "../queues/mailQueue";
+import { redisClient } from "../redis/redisClient";
+import storeOtp from "../redis/storeOtp";
+import { validateOTP } from "../redis/validateOtp";
 import { userRepository } from "../repository/userRespository"
 import { createJWT } from '../utils/common/authUtil';
 
@@ -28,7 +31,11 @@ export const userSignInService = async (data:Idata)=>{
         if(!user) throw new Error('Invalid email and password');
         const isPasswordMatch = await user.verifyPassword(password);
         if(!isPasswordMatch) throw new Error('Password is not valid');
-        addEmailToQueue(mailObjectValidation(email,otpGenerator()))
+        const Otp = otpGenerator();
+        storeOtp(email,Otp);
+         const storedOtp = await redisClient.get(email);
+        addEmailToQueue(mailObjectValidation(email,parseInt(storedOtp || "0")));
+
         return {
             username:user.username,
             email,
@@ -37,6 +44,16 @@ export const userSignInService = async (data:Idata)=>{
     } catch (error) {
         console.log(error);
         throw error
+    }
+}
+
+export const validateOtpService = async(email:string,otp:number)=>{
+    try {
+        const response = await validateOTP(email,otp);
+        console.log(email,otp)
+        return response
+    } catch (error) {
+        console.log("error in otp validation", error)
     }
 }
 

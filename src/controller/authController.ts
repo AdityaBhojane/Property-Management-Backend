@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import { StatusCodes } from "http-status-codes";
 import customErrorResponse from "../utils/customError";
-import { userSignInService, userSignUpService } from "../service/userService";
+import { userSignInService, userSignUpService, validateOtpService } from "../service/authService";
 import customSuccessResponse from "../utils/customSuccess";
 
 
@@ -24,5 +24,16 @@ export const signInController = async(req:Request,res:Response)=>{
     } catch (error) {
         console.log("sign up controller error", error);
         res.status(StatusCodes.BAD_REQUEST).json(customErrorResponse('something is wrong with sign in controller',error))
+    }
+};
+
+export const otpController = async (req:Request,res:Response)=>{
+    try {
+        const {email,otp} = req.body;
+        const response = await validateOtpService(email,otp);
+        res.status(StatusCodes.OK).json(customSuccessResponse('otp validated',response))
+    } catch (error) {
+        console.log("otp validation error", error);
+        res.status(StatusCodes.BAD_REQUEST).json(customErrorResponse('something is wrong with otp controller',error))
     }
 }
