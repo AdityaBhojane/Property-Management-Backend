@@ -1,13 +1,13 @@
 import argon2  from "argon2";
 import mongoose, { Document, Types } from "mongoose";
-import { string } from "zod";
 
-interface UserType extends Document{
+ export interface IUser extends Document{
     _id: Types.ObjectId;
     username:string;
     email:string;
     password:string;
     role:string;
+    properties:mongoose.Types.ObjectId[],
     verifyPassword:(password:string)=>Promise<boolean>;
 }
 
@@ -32,6 +32,10 @@ const userSchema = new mongoose.Schema({
         required:[true, 'password is required'],
         minLength:[4,'must contain at least 3 characters'],
     },
+    properties:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Property"
+    }],
     role:{
         type:String,
         enum:["user","admin"],
@@ -50,6 +54,6 @@ userSchema.methods.verifyPassword = async function (password:string) {
     return await argon2.verify(this.password, password)
 };
 
-const User = mongoose.model<UserType>("User", userSchema);
+const User = mongoose.model<IUser>("User", userSchema);
 
 export default User;

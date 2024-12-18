@@ -1,13 +1,15 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Document, Schema, Types } from "mongoose";
 
 interface PropertyTypes extends Document{
+  _id: Types.ObjectId; 
   name:string;
   description:string;
   images:File;
   price:number,
   location:string,
+  purpose:string,
   PropertyType:string,
-  creatorId:string,
+  creator:Types.ObjectId,
 };
 
 const PropertySchema = new Schema({
@@ -22,8 +24,8 @@ const PropertySchema = new Schema({
         minLength:[10, 'must contain at least 10 characters']
     },
     images:{
-        type:File,
-        required:[true,'image file is required']
+        type:String,
+        required:[true,'image is required']
     },
     price:{
         type:Number,
@@ -33,10 +35,15 @@ const PropertySchema = new Schema({
         type:String,
         required:[true,'location is required']
     },
+    purpose:{
+        type:String,
+        enum:["rent","sale"],
+        required:true
+    },
     PropertyType:{
         type:String
     },
-    creatorId:{
+    creator:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
     }

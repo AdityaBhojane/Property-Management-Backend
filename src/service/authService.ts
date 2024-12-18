@@ -77,7 +77,7 @@ export const userSignInAdminService = async (data:Idata)=>{
         const isPasswordMatch = await user.verifyPassword(password);
         if(!isPasswordMatch) throw new ErrorHelper('Invalid password',StatusCodes.BAD_REQUEST,"invalid email");
         return {
-            id:user.id,
+            id:user._id,
             username:user.username,
             email,
             token:createJWT({email},"admin")
