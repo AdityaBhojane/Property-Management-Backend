@@ -1,11 +1,13 @@
 import argon2  from "argon2";
 import mongoose, { Document, Types } from "mongoose";
+import { string } from "zod";
 
 interface UserType extends Document{
     _id: Types.ObjectId;
     username:string;
     email:string;
     password:string;
+    role:string;
     verifyPassword:(password:string)=>Promise<boolean>;
 }
 
@@ -29,7 +31,12 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:[true, 'password is required'],
         minLength:[4,'must contain at least 3 characters'],
-    }
+    },
+    role:{
+        type:String,
+        enum:["user","admin"],
+        default:"user"
+    },
 },{timestamps:true});
 
 userSchema.pre("save", async function (next) {

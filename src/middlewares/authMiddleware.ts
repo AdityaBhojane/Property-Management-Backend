@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../configs/severConfig";
+import { JWT_USER_SECRET } from "../configs/severConfig";
 
 declare module "express-serve-static-core" {
     interface Request {
@@ -17,7 +17,7 @@ export const jwtVerify =(req:Request,res:Response,next:NextFunction):void=>{
         })
     };
     try {
-        const decoded = jwt.verify(token,JWT_SECRET as string);
+        const decoded = jwt.verify(token,JWT_USER_SECRET as string);
         req.user = decoded;
         next()
     } catch (error) {
