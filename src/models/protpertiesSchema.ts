@@ -41,7 +41,9 @@ const PropertySchema = new Schema({
         required:true
     },
     PropertyType:{
-        type:String
+        type:String,
+        enum: ["apartment", "villa", "office", "shop", "plot"], 
+        required: [true,"enter valid property type"]
     },
     creator:{
         type:mongoose.Schema.Types.ObjectId,
