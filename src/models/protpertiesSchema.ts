@@ -4,7 +4,7 @@ interface PropertyTypes extends Document{
   _id: Types.ObjectId; 
   name:string;
   description:string;
-  images:File;
+  images:string;
   price:number,
   location:string,
   purpose:string,

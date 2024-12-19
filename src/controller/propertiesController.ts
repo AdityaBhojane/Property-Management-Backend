@@ -8,16 +8,25 @@ import customSuccessResponse from "../utils/customSuccess";
 
 export const createPropertyController = async (req: Request, res: Response) => {
     try {
+        if (!req.file || !req.file.path) {
+            res.status(400).json({
+                success: false,
+                message: "Image is required"
+            });
+            return;
+        }
+        const images = req.file.path;
         const { 
             name,
             description,
-            images,
             price,
             location,
             purpose,
             PropertyType,
             email
         } = req.body;
+
+        console.log(name,description,images,price,location,purpose,PropertyType,email)
 
         const user = await userRepository.findByEmail(email);
 
@@ -28,7 +37,7 @@ export const createPropertyController = async (req: Request, res: Response) => {
 
         const creator = user._id 
 
-        if (name || description || images || price || location || purpose || PropertyType) {
+        if (!name || !description || !images || !price || !location || !purpose || !PropertyType) {
             res.status(StatusCodes.BAD_REQUEST).json(customErrorResponse('all fields are required', StatusCodes.BAD_REQUEST))
         }
         const response = await createPropertyService(email,{

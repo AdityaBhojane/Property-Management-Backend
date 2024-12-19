@@ -7,7 +7,7 @@ import { Types } from "mongoose"
 interface IPropertyData {
     name: string
     description: string
-    images: File
+    images: string
     price: number
     location: string
     purpose: string
@@ -67,10 +67,10 @@ export const updatePropertyService = async (id: string, updatedData: IPropertyDa
 // Property Service - deletePropertyService.ts
 export const deletePropertyService = async (propertyId: string, email: string) => {
     try {
-        const user = await userRepository.findByEmail(email);
+        const user = await userRepository.get(email);
         if (!user) throw new ErrorHelper('User not found', StatusCodes.NOT_FOUND, user);
 
-        const property = await PropertyRepository.deletePropertyById(propertyId);
+        const property = await PropertyRepository.delete(propertyId);
         if (!property) throw new ErrorHelper('Property not found', StatusCodes.NOT_FOUND, "Not Found");
 
         // Remove the property ID from the user's properties array
