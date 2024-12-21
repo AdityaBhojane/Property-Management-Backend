@@ -18,7 +18,7 @@ export const validateOTP = async (email: string, otp: number | string): Promise<
 
     if (parseInt(storedOtp) === userOtp) {
       console.log("OTP validated successfully");
-      await redisClient.del(email); // Remove OTP after successful validation
+      // await redisClient.del(email); // Remove OTP after successful validation
       return true;
     }
 

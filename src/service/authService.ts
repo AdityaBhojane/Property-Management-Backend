@@ -23,9 +23,18 @@ export const  userSignUpService = async (data:Idata)=>{
             email:user.email
         })
         const response = await userRepository.create(data);
-        return response
+        const Otp = otpGenerator();
+        storeOtp(data.email,Otp);
+        const storedOtp = await redisClient.get(data.email);
+        addEmailToQueue(mailObjectValidation(data.email,parseInt(storedOtp || "0")));
+        return {
+            id:response.id,
+            username:response.username,
+            email:response.email,
+            role:response.role
+        }
     } catch (error) {
-        console.log(error);
+        console.log(error); 
         throw new ErrorHelper('user sign up field',StatusCodes.FORBIDDEN, error);
     }
 };
@@ -37,16 +46,15 @@ export const userSignInService = async (data:Idata)=>{
         if(!user) throw new ErrorHelper('Invalid email Or password',StatusCodes.BAD_REQUEST,"invalid email");
         const isPasswordMatch = await user.verifyPassword(password);
         if(!isPasswordMatch) throw new ErrorHelper('Invalid Password',StatusCodes.BAD_REQUEST,"invalid email");
-        const Otp = otpGenerator();
-        storeOtp(email,Otp);
-         const storedOtp = await redisClient.get(email);
-        addEmailToQueue(mailObjectValidation(email,parseInt(storedOtp || "0")));
+
+        if(!user.isVerify) throw new ErrorHelper('verification required',StatusCodes.BAD_REQUEST,"user not verified");
 
         return {
             id:user.id,
             username:user.username,
             email,
-            role:user.role
+            role:user.role,
+            token:createJWT({id:user.id, email},"user")
         }
     } catch (error) {
         console.log(error);
@@ -54,14 +62,19 @@ export const userSignInService = async (data:Idata)=>{
     }
 }
 
-export const validateOtpService = async(id:string,email:string,otp:number)=>{
+export const validateOtpService = async(id:string,otp:number)=>{
     try {
+        const user = await userRepository.get(id)
+        if(!user) throw new ErrorHelper('User not found',StatusCodes.BAD_REQUEST, "Not Found");
+        const email = user?.email
         const response = await validateOTP(email,otp);
+        
+        if(response){
+            user.isVerify=true;
+            await user.save();
+        }
         return { 
             response,
-            data:{
-                token:createJWT({id, email},"user")
-            }
         } 
     } catch (error) {
         console.log("error in otp validation", error);

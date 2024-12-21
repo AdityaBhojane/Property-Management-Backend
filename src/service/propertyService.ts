@@ -29,7 +29,8 @@ export const createPropertyService = async (email:string,propertyData: IProperty
             price:propertyData.price,
             location:propertyData.location,
             purpose:propertyData.purpose,
-            PropertyType:propertyData.PropertyType
+            PropertyType:propertyData.PropertyType,
+            creator:user._id
         });
 
          user.properties.push(response._id);
@@ -84,4 +85,15 @@ export const deletePropertyService = async (propertyId: string, email: string) =
     }
 };
 
+
+export const getPropertyService = async () => {
+    try {
+        const property = await PropertyRepository.getAll();
+        if (!property) throw new ErrorHelper('Property not found', StatusCodes.NOT_FOUND, "Not Found");
+        return { message: 'Property deleted successfully', property };
+    } catch (error) {
+        console.log('get property service error -', error);
+        throw new ErrorHelper('Failed to get property', StatusCodes.BAD_REQUEST, error);
+    }
+};
 

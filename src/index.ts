@@ -3,13 +3,15 @@ import { StatusCodes } from "http-status-codes";
 import { PORT } from "./configs/severConfig";
 import connectDB from "./configs/dbConfig";
 import apiRouter from "./routes/apiRouter";
-import { mailer } from "./configs/mailerConfig";
+// import { mailer } from "./configs/mailerConfig";
+import cors from 'cors'
 
 
 const app = express();
 
+app.use(cors())
 app.use(express.json());
-app.use('/api',apiRouter)
+app.use('/api',apiRouter);
 
 
 app.get('/ping',async(req,res)=>{

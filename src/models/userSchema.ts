@@ -8,6 +8,7 @@ import mongoose, { Document, Types } from "mongoose";
     password:string;
     role:string;
     properties:mongoose.Types.ObjectId[],
+    isVerify:Boolean,
     verifyPassword:(password:string)=>Promise<boolean>;
 }
 
@@ -36,6 +37,10 @@ const userSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"Property"
     }],
+    isVerify:{
+        type:Boolean,
+        default:false,
+    },
     role:{
         type:String,
         enum:["user","admin"],
