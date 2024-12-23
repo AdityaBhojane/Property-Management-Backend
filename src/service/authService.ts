@@ -42,11 +42,11 @@ export const  userSignUpService = async (data:Idata)=>{
 export const userSignInService = async (data:Idata)=>{
     try {
         const {email, password} = data;
+        if(!email || !password) throw new ErrorHelper('email Or password is required',StatusCodes.BAD_REQUEST,"email and password required");
         const user = await userRepository.findByEmail(email);
         if(!user) throw new ErrorHelper('Invalid email Or password',StatusCodes.BAD_REQUEST,"invalid email");
         const isPasswordMatch = await user.verifyPassword(password);
         if(!isPasswordMatch) throw new ErrorHelper('Invalid Password',StatusCodes.BAD_REQUEST,"invalid email");
-
         if(!user.isVerify) throw new ErrorHelper('verification required',StatusCodes.BAD_REQUEST,"user not verified");
 
         return {

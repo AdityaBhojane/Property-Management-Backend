@@ -10,10 +10,11 @@ interface IPropertyData {
     images: string
     price: number
     location: string
+    city:number  
     purpose: string
     PropertyType: string
     creator?: Types.ObjectId
-}
+} 
 
 
 export const createPropertyService = async (email:string,propertyData: IPropertyData) => {

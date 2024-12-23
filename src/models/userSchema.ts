@@ -7,6 +7,9 @@ import mongoose, { Document, Types } from "mongoose";
     email:string;
     password:string;
     role:string;
+    city:string;
+    phone:string;
+    images:string;
     properties:mongoose.Types.ObjectId[],
     isVerify:Boolean,
     verifyPassword:(password:string)=>Promise<boolean>;
@@ -33,6 +36,16 @@ const userSchema = new mongoose.Schema({
         required:[true, 'password is required'],
         minLength:[4,'must contain at least 3 characters'],
     },
+    phone:{
+        type:String,
+    },
+    city:{
+        type:String,
+        required:[true, 'city is required']
+    },
+    images:{
+        type:String,
+    },
     properties:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Property"
@@ -56,7 +69,8 @@ userSchema.pre("save", async function (next) {
 });
 
 userSchema.methods.verifyPassword = async function (password:string) {
-    return await argon2.verify(this.password, password)
+    const response = await argon2.verify(this.password, password);
+    return response
 };
 
 const User = mongoose.model<IUser>("User", userSchema);

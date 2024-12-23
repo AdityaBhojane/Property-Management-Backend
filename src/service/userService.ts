@@ -11,7 +11,7 @@ export const getUserService = async (id:string) =>{
     }
 };
 
-export const updateUserService = async (id:string,data:{username: string}) =>{
+export const updateUserService = async (id:string,data:{username?: string, city?:string, phone?:string, images?:string}) =>{
     try {
         return await userRepository.update(id,data)
     } catch (error) {
@@ -25,6 +25,15 @@ export const deleteUserService = async (id:string)=>{
         return await userRepository.delete(id)
     } catch (error) {
         console.log('error in delete user - ', error);
+        throw error
+    }
+};
+
+export const getAgentService  = async ()=>{
+    try {
+        return await userRepository.getAgent();
+    } catch (error) {
+        console.log('error in get agent service - ', error);
         throw error
     }
 }

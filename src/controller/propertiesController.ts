@@ -21,6 +21,7 @@ export const createPropertyController = async (req: Request, res: Response) => {
             description,
             price,
             location,
+            city,
             purpose,
             PropertyType,
         } = req.body;
@@ -45,6 +46,7 @@ export const createPropertyController = async (req: Request, res: Response) => {
             images,
             price,
             location,
+            city,
             purpose,
             PropertyType,
             creator
@@ -68,6 +70,7 @@ export const updatePropertyController = async (req: Request, res: Response) => {
             images,
             price,
             location,
+            city,
             purpose,
             PropertyType,
         } = req.body;
@@ -78,6 +81,7 @@ export const updatePropertyController = async (req: Request, res: Response) => {
             images,
             price,
             location,
+            city,
             purpose,
             PropertyType,
         })

@@ -23,7 +23,7 @@ export const signInController = async(req:Request,res:Response)=>{
         if(!email || !password) res.status(StatusCodes.BAD_REQUEST).json(customErrorResponse('email and password is required', StatusCodes.BAD_REQUEST));
         const response = await userSignInService({email,password});
         res.status(StatusCodes.OK).json(customSuccessResponse('user singed in successfully',response))
-    } catch (error) {
+    } catch (error ) {
         console.log("sign up controller error", error);
         res.status(StatusCodes.BAD_REQUEST).json(customErrorResponse('something is wrong with sign in controller',error))
     }

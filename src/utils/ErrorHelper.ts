@@ -8,6 +8,7 @@ class ErrorHelper extends Error{
         this.statusCode=statusCode,
         this.error=error
     }
+    
 }
 
 export default ErrorHelper;

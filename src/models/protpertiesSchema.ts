@@ -7,6 +7,7 @@ interface PropertyTypes extends Document{
   images:string;
   price:number,
   location:string,
+  city:number,
   purpose:string,
   PropertyType:string,
   creator:Types.ObjectId,
@@ -34,6 +35,10 @@ const PropertySchema = new Schema({
     location:{
         type:String,
         required:[true,'location is required']
+    },
+    cityPin:{
+        type:Number,
+        required:true
     },
     purpose:{
         type:String,
