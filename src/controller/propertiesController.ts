@@ -22,11 +22,12 @@ export const createPropertyController = async (req: Request, res: Response) => {
             price,
             location,
             city,
+            cityPin,
             purpose,
             PropertyType,
         } = req.body;
 
-        console.log(req.user)
+        console.log("REQUEST BODY LOG " ,req.body)
 
         const user = await userRepository.findByEmail(req.user.email);
 
@@ -47,6 +48,7 @@ export const createPropertyController = async (req: Request, res: Response) => {
             price,
             location,
             city,
+            cityPin,
             purpose,
             PropertyType,
             creator
@@ -71,6 +73,7 @@ export const updatePropertyController = async (req: Request, res: Response) => {
             price,
             location,
             city,
+            cityPin,
             purpose,
             PropertyType,
         } = req.body;
@@ -82,6 +85,7 @@ export const updatePropertyController = async (req: Request, res: Response) => {
             price,
             location,
             city,
+            cityPin,
             purpose,
             PropertyType,
         })

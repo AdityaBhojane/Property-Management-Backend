@@ -5,6 +5,7 @@ import propertyRouter from "./propertiesRouter";
 import chartsDataRouter from "./chartsDataRouter";
 import agentRouter from "./agentRouter";
 import messageRouter from "./messageRouter";
+import chatRouter from "./chatRooute";
 
 
 
@@ -16,5 +17,6 @@ v1Router.use('/property', propertyRouter)
 v1Router.use('/stats', chartsDataRouter)
 v1Router.use('/agents', agentRouter)
 v1Router.use('/message', messageRouter)
+v1Router.use('/', chatRouter)
 
 export default v1Router;

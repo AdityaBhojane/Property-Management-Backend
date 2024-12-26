@@ -5,6 +5,6 @@ import { getMessagesController } from "../../controller/messageController";
 
 const messageRouter = Router();
 
-messageRouter.get('/:senderId/:userId', jwtVerify, getMessagesController);
+messageRouter.get('/:participantId', jwtVerify, getMessagesController);
 
 export default messageRouter

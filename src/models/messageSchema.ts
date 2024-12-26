@@ -4,7 +4,7 @@ import mongoose, { Document, Types } from 'mongoose';
     _id: Types.ObjectId;
     body:string;
     userId:Types.ObjectId;
-    senderId:Types.ObjectId;
+    participantId:Types.ObjectId;
 }
 
 const messageSchema = new mongoose.Schema({
@@ -17,10 +17,10 @@ const messageSchema = new mongoose.Schema({
     ref: 'Channel',
     required: [true, 'Channel ID is required']
   },
-  senderId: {
+  participantId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: [true, 'Sender ID is required']
+    required: [true, 'participant ID is required']
   },
 });
 

@@ -10,7 +10,8 @@ interface IPropertyData {
     images: string
     price: number
     location: string
-    city:number  
+    city:string  
+    cityPin:number
     purpose: string
     PropertyType: string
     creator?: Types.ObjectId
@@ -29,11 +30,13 @@ export const createPropertyService = async (email:string,propertyData: IProperty
             images:propertyData.images,
             price:propertyData.price,
             location:propertyData.location,
+            cityPin:propertyData.cityPin,
+            city:propertyData.city,
             purpose:propertyData.purpose,
             PropertyType:propertyData.PropertyType,
             creator:user._id
         });
-
+        console.log(response)
          user.properties.push(response._id);
          await user.save();
          return response;

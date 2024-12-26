@@ -12,10 +12,17 @@ import { createMessageService } from "./service/messageService";
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server)
+
+const io = new Server(server, {
+    cors: {
+      origin: '*', 
+      methods: ['GET', 'POST'], 
+    },
+  });
+  
 
 app.use(cors())
-app.use(express.json());
+app.use(express.json()); 
 app.use('/api',apiRouter);
 
 
@@ -28,23 +35,29 @@ app.get('/ping',async(req,res)=>{
 
 io.on("connect",(socket)=>{
     socket.on("NewMessageEvent", async function (data,cb) {
-        const messageResponse = await createMessageService(data);
-        socket.broadcast.emit("NewMessageReceivedEvent",messageResponse);
-        cb({
-            success:true,
-            data:messageResponse
-        })
+        try {
+            const messageResponse = await createMessageService(data); 
+            io.to(data.participantId).emit("NewMessageReceivedEvent",messageResponse);
+            cb({
+                success:true,
+                data:messageResponse
+            })
+        } catch (error) {
+            console.log("ERROR",error)
+        }
     })
 })
 
-server.listen(PORT, async ()=>{
+
+
+server.listen(PORT, async ()=>{  
     connectDB();
     console.log("server is up on port", PORT);
     // const response =  await mailer.sendMail({
     //     from:'nestify.manager@gmail.com',
     //     to:"adityabhojane2001@gmail.com",
     //     subject:"sample email",
-    //     text:"sample text",
+    //     text:"sample text", 
     //     html:"<p> paragraph tag<p>"
     // });
     // console.log('email' , response)
