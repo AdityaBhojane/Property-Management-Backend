@@ -101,3 +101,16 @@ export const getPropertyService = async () => {
     }
 };
 
+
+ 
+export const getPropertyByIdService = async (userId:string) => {
+    try {
+        const property = await PropertyRepository.getAllPropertiesById(userId);
+        if (!property) throw new ErrorHelper('Property not found', StatusCodes.NOT_FOUND, "Not Found");
+        return { message: 'Property deleted successfully', property };
+    } catch (error) {
+        console.log('get property service error -', error);
+        throw new ErrorHelper('Failed to get property', StatusCodes.BAD_REQUEST, error);
+    }
+};
+

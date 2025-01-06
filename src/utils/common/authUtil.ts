@@ -9,8 +9,10 @@ interface IPayload {
 
 export const createJWT = (payload:IPayload, role:string)=>{
     if(role==="admin"){
+        console.log('admin')
         return jwt.sign(payload, JWT_ADMIN_SECRET as string,{expiresIn:JWT_EXPIRY}) 
     }else{
+        console.log('user')
         return jwt.sign(payload, JWT_USER_SECRET as string,{expiresIn:JWT_EXPIRY}) 
     }
 }

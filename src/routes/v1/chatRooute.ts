@@ -1,11 +1,12 @@
 import { Router } from "express";
-import { jwtVerify } from "../../middlewares/authMiddleware";
-import { createChatController, findChatByIdController } from "../../controller/chatController";
+import { jwtVerify, jwtVerifyAdmin } from "../../middlewares/authMiddleware";
+import { createChatController, findChatByIdController, findUserChatListByIAdminController } from "../../controller/chatController";
 
 
 const chatRouter = Router();
 
 chatRouter.post('/chat',jwtVerify,createChatController);
-chatRouter.get('/chat',jwtVerify,findChatByIdController);
+chatRouter.get('/getChat',jwtVerify,findChatByIdController);
+chatRouter.get('/userChat',jwtVerifyAdmin,findUserChatListByIAdminController);
 
-export default chatRouter;
+export default chatRouter; 

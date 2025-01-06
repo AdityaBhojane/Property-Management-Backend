@@ -89,11 +89,12 @@ export const userSignInAdminService = async (data:Idata)=>{
         if(!user) throw new ErrorHelper('Invalid email and password',StatusCodes.BAD_REQUEST,"invalid email");
         const isPasswordMatch = await user.verifyPassword(password);
         if(!isPasswordMatch) throw new ErrorHelper('Invalid password',StatusCodes.BAD_REQUEST,"invalid email");
+        const userId = user.id
         return {
             id:user._id,
             username:user.username,
             email,
-            token:createJWT({email},"admin")
+            token:createJWT({id:userId,email},"admin")
         }
     } catch (error) {
         console.log(error);

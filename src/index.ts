@@ -7,7 +7,7 @@ import {createServer} from "http";
 // import { mailer } from "./configs/mailerConfig";
 import cors from 'cors'
 import { Server } from "socket.io";
-import { createMessageService } from "./service/messageService";
+import { MessageSocketHandlers, RoomSocketHandlers } from "./controller/scoketControllers";
 
 
 const app = express();
@@ -32,22 +32,13 @@ app.get('/ping',async(req,res)=>{
     })
 });
 
-
-io.on("connect",(socket)=>{
-    socket.on("NewMessageEvent", async function (data,cb) {
-        try {
-            const messageResponse = await createMessageService(data); 
-            io.to(data.participantId).emit("NewMessageReceivedEvent",messageResponse);
-            cb({
-                success:true,
-                data:messageResponse
-            })
-        } catch (error) {
-            console.log("ERROR",error)
-        }
-    })
-})
-
+io.on('connection', (socket) => {
+    console.log('A user connected:', socket.id);
+    // Attach message and room handlers
+    RoomSocketHandlers(io, socket);
+    MessageSocketHandlers(io, socket);
+  });
+  
 
 
 server.listen(PORT, async ()=>{  

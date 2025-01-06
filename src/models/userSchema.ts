@@ -41,7 +41,6 @@ const userSchema = new mongoose.Schema({
     },
     city:{
         type:String,
-        required:[true, 'city is required']
     },
     images:{
         type:String,
