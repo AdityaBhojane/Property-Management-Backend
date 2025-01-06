@@ -23,7 +23,7 @@ const server = createServer(app);
 const io = new Server(server, {
   cors: {
     origin: 'https://nestify-property-management.vercel.app/',
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
   },
 });
 
