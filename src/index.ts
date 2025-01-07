@@ -11,12 +11,14 @@ import { MessageSocketHandlers, RoomSocketHandlers } from "./controller/scoketCo
 
 
 const app = express();
-// const corsOptions = {
-//   origin: '*',
-//   methods: ['GET', 'POST'],
-// };
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://nestify-property-management.vercel.app", // Replace with your frontend URL
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true, // Allow cookies if needed
+  })
+);
 
 const server = createServer(app);
 
