@@ -19,7 +19,7 @@ app.use(
     credentials: true, 
   })
 );
-
+app.options("*", cors());
 
 const server = createServer(app);
 
