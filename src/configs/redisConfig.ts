@@ -8,7 +8,7 @@ export const redisConfig = {
 
 
 
-const redis = new Redis(REDIS_URL);
+const redis = new Redis(redisConfig);
 
 
 redis.on("connect", () => {
