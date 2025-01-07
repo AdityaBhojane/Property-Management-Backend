@@ -14,9 +14,9 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://nestify-property-management.vercel.app", // Replace with your frontend URL
+    origin: "https://nestify-property-management.vercel.app", 
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true, // Allow cookies if needed
+    credentials: true, 
   })
 );
 
@@ -24,11 +24,10 @@ const server = createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    origin: "https://nestify-property-management.vercel.app", 
+    methods: ["GET", "POST", "PUT", "DELETE"],
   },
 });
-
 
 app.use(express.json());
 app.use('/api', apiRouter);
