@@ -16,13 +16,13 @@ const app = express();
 //   methods: ['GET', 'POST'],
 // };
 
-// app.use(cors(corsOptions));
+app.use(cors());
 
 const server = createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: 'https://nestify-property-management.vercel.app/',
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
   },
 });
