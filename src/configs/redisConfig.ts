@@ -7,7 +7,9 @@ export const redisConfig = {
 }
 
 
+
 const redis = new Redis(REDIS_URL);
+
 
 redis.on("connect", () => {
   console.log("Connected to Redis!");
