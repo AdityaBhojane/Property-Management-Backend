@@ -8,7 +8,10 @@ export const redisConfig = {
 
 
 
-const redis = new Redis(redisConfig);
+const redis = new Redis({
+  host: "red-ctu6tqdumphs73el9ro0", 
+  port: 6379,                       
+});
 
 
 redis.on("connect", () => {
