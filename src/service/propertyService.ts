@@ -19,7 +19,6 @@ interface IPropertyData {
 
 
 export const createPropertyService = async (email:string,propertyData: IPropertyData) => {
-    // const session = mongoose.startSession();
     try {
         const user = await userRepository.findByEmail(email);
         if (!user) throw new ErrorHelper('user not found', StatusCodes.NOT_FOUND, user);

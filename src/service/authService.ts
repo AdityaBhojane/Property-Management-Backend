@@ -23,10 +23,10 @@ export const  userSignUpService = async (data:Idata)=>{
             email:user.email
         })
         const response = await userRepository.create(data);
-        const Otp = otpGenerator();
-        storeOtp(data.email,Otp);
-        const storedOtp = await redisClient.get(data.email);
-        addEmailToQueue(mailObjectValidation(data.email,parseInt(storedOtp || "0")));
+        // const Otp = otpGenerator();
+        // storeOtp(data.email,Otp);
+        // const storedOtp = await redisClient.get(data.email);
+        // addEmailToQueue(mailObjectValidation(data.email,parseInt(storedOtp || "0")));
         return {
             id:response.id,
             username:response.username,
