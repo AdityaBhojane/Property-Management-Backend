@@ -1,11 +1,4 @@
-
 import { StatusCodes } from "http-status-codes";
-import { mailObjectValidation } from "../helpers/mailObject";
-import otpGenerator from "../helpers/otpGenerator";
-import { addEmailToQueue } from "../queues/mailQueue";
-import { redisClient } from "../redis/redisClient";
-import storeOtp from "../redis/storeOtp";
-import { validateOTP } from "../redis/validateOtp";
 import { userRepository } from "../repository/userRespository"
 import { createJWT } from '../utils/common/authUtil';
 import ErrorHelper from "../utils/ErrorHelper";
@@ -23,10 +16,6 @@ export const  userSignUpService = async (data:Idata)=>{
             email:user.email
         })
         const response = await userRepository.create(data);
-        // const Otp = otpGenerator();
-        // storeOtp(data.email,Otp);
-        // const storedOtp = await redisClient.get(data.email);
-        // addEmailToQueue(mailObjectValidation(data.email,parseInt(storedOtp || "0")));
         return {
             id:response.id,
             username:response.username,
@@ -62,25 +51,7 @@ export const userSignInService = async (data:Idata)=>{
     }
 }
 
-export const validateOtpService = async(id:string,otp:number)=>{
-    try {
-        const user = await userRepository.get(id)
-        if(!user) throw new ErrorHelper('User not found',StatusCodes.BAD_REQUEST, "Not Found");
-        const email = user?.email
-        const response = await validateOTP(email,otp);
-        
-        if(response){
-            user.isVerify=true;
-            await user.save();
-        }
-        return { 
-            response,
-        } 
-    } catch (error) {
-        console.log("error in otp validation", error);
-        throw new ErrorHelper('user otp validation field',StatusCodes.BAD_REQUEST, error);
-    }
-};
+
 
 export const userSignInAdminService = async (data:Idata)=>{
     try {
@@ -101,4 +72,3 @@ export const userSignInAdminService = async (data:Idata)=>{
         throw new ErrorHelper('user sign in with admin field',StatusCodes.BAD_REQUEST, error);
     }
 }
-
